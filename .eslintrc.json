@@ -1,3 +1,9 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": [
+    "@gm-dev/eslint-config/tailwind/next"
+  ],
+  "rules": {
+    "no-restricted-syntax": "off",
+    "no-continue": "off"
+  }
 }
