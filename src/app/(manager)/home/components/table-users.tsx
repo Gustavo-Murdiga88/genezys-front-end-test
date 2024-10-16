@@ -94,15 +94,16 @@ export function TableUsers() {
 					</TableBody>
 				</Table>
 			</div>
-			<div className="mb-5 mt-2 flex items-center justify-between rounded-sm border p-4">
-				<div className="text-left text-sm">
-					<span className="text-muted-foreground">Total de páginas: </span>
-					<strong className="mr-3">{totalPages}</strong>
-					<strong className="text-muted-foreground">Total registros:</strong>
-					<span className="font-semibold text-primary">
-						{" "}
-						{totalResults} usuários
-					</span>
+			<div className="mb-5 mt-2 flex items-center justify-between gap-2 rounded-sm border p-4">
+				<div className="flex flex-col text-left text-sm">
+					<div>
+						<span className="text-muted-foreground">Total de páginas: </span>
+						<strong className="mr-3">{totalPages}</strong>
+					</div>
+					<div>
+						<strong className="text-muted-foreground">Total registros:</strong>
+						<span className="font-semibold text-primary"> {totalResults}</span>
+					</div>
 				</div>
 				<div className="flex items-center justify-end gap-5">
 					<Button

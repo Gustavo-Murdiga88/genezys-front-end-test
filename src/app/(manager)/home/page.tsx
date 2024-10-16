@@ -1,10 +1,15 @@
 import { UserPlus } from "lucide-react";
+import type { Metadata } from "next";
 import { Link } from "next-view-transitions";
 
 import { Button } from "@/components/ui/button";
 
 import { Header } from "../components/header";
 import { TableUsers } from "./components/table-users";
+
+export const metadata: Metadata = {
+	title: "Home",
+};
 
 export default function Register() {
 	return (

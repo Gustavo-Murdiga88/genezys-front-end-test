@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
+
 import { Header } from "../components/header";
 import { FormUser } from "./components/form-user";
 
+export const metadata: Metadata = {
+	title: "Cadastros",
+};
 export default function Register() {
 	return (
 		<>

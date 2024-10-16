@@ -1,8 +1,8 @@
 "use client";
 
-import { CornerDownLeft, User2 } from "lucide-react";
+import { CornerDownLeft, Loader2, User2 } from "lucide-react";
 import { Link } from "next-view-transitions";
-import { type FormEvent, useRef } from "react";
+import { type FormEvent, useRef, useTransition } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -26,101 +26,112 @@ interface IFormProps {
 
 export function FormUser() {
 	const { createUser } = useUsers();
+	const [isPending, setTransition] = useTransition();
 
 	const form = useRef<HTMLFormElement>(null);
 
 	async function getAddress(cep: string) {
-		const response = await getAddressByCep(cep);
+		setTransition(async () => {
+			const response = await getAddressByCep(cep);
 
-		if (!response.success) {
-			toast.info("CEP não encontrado, por favor verifique o CEP informado");
-			return;
-		}
+			if (!response.success) {
+				toast.info("CEP não encontrado, por favor verifique o CEP informado");
+				return;
+			}
 
-		if (form.current && typeof document !== "undefined") {
-			const { bairro, cep, uf, localidade, logradouro } = response.data;
-			const city = document.getElementById("town") as HTMLInputElement;
-			const cepInput = document.getElementById("cep") as HTMLInputElement;
-			const street = document.getElementById("street") as HTMLInputElement;
-			const neighborhood = document.getElementById(
-				"neighborhood",
-			) as HTMLInputElement;
-			const ufInput = document.getElementById("uf") as HTMLInputElement;
+			if (form.current && typeof document !== "undefined") {
+				const { bairro, cep, uf, localidade, logradouro } = response.data;
+				const city = document.getElementById("town") as HTMLInputElement;
+				const cepInput = document.getElementById("cep") as HTMLInputElement;
+				const street = document.getElementById("street") as HTMLInputElement;
+				const neighborhood = document.getElementById(
+					"neighborhood",
+				) as HTMLInputElement;
+				const ufInput = document.getElementById("uf") as HTMLInputElement;
 
-			city.value = localidade;
-			cepInput.value = cep;
-			street.value = logradouro;
-			neighborhood.value = bairro;
-			ufInput.value = uf;
-		}
+				city.value = localidade;
+				cepInput.value = cep;
+				street.value = logradouro;
+				neighborhood.value = bairro;
+				ufInput.value = uf;
+			}
+		});
 	}
 
 	function handleSubmit(eventForm: FormEvent<HTMLFormElement>) {
 		eventForm.preventDefault();
-		const formEvent = new FormData(eventForm.currentTarget);
+		setTransition(async () => {
+			const formEvent = new FormData(eventForm.currentTarget);
 
-		if (!form.current) {
-			return;
-		}
-
-		let success = true;
-
-		for (const input of form.current) {
-			const inputIsInvalid =
-				"value" in input &&
-				!input.value &&
-				!["submit", "button"].includes(input.getAttribute("type") || "");
-
-			if (inputIsInvalid) {
-				(input as HTMLInputElement).dataset.invalid = "true";
-				success = false;
-				break;
+			if (!form.current) {
+				return;
 			}
 
-			(input as HTMLInputElement).dataset.invalid = "false";
-		}
+			let success = true;
 
-		if (!success) {
-			toast.info("Por favor, preencha todos os campos corretamente");
-			return;
-		}
+			for (const input of form.current) {
+				const inputIsInvalid =
+					"value" in input &&
+					!input.value &&
+					!["submit", "button"].includes(input.getAttribute("type") || "");
 
-		const data = Object.fromEntries(
-			formEvent.entries(),
-		) as unknown as IFormProps;
+				if (inputIsInvalid) {
+					(input as HTMLInputElement).dataset.invalid = "true";
+					success = false;
+					break;
+				}
 
-		const password = document.getElementById("password") as HTMLInputElement;
-		const confirmPassword = document.getElementById(
-			"confirmPassword",
-		) as HTMLInputElement;
+				(input as HTMLInputElement).dataset.invalid = "false";
+			}
 
-		if (data.password !== data.confirmPassword) {
-			toast.error("As senhas informadas não conferem");
-			password.dataset.invalid = "true";
-			confirmPassword.dataset.invalid = "true";
-			return;
-		}
+			if (!success) {
+				toast.info("Por favor, preencha todos os campos corretamente");
+				return;
+			}
 
-		if (data.password === data.confirmPassword) {
-			password.dataset.invalid = "false";
-			confirmPassword.dataset.invalid = "false";
-		}
+			const data = Object.fromEntries(
+				formEvent.entries(),
+			) as unknown as IFormProps;
 
-		createUser({
-			address: data.street,
-			cep: data.cep,
-			city: data.town,
-			email: data.email,
-			id: new Date().getTime().toString(),
-			name: data.name,
-			neighborhood: data.neighborhood,
-			state: data.uf,
-			password: data.password,
-			number: data.number,
+			const password = document.getElementById("password") as HTMLInputElement;
+			const confirmPassword = document.getElementById(
+				"confirmPassword",
+			) as HTMLInputElement;
+
+			if (data.password !== data.confirmPassword) {
+				toast.error("As senhas informadas não conferem");
+				password.dataset.invalid = "true";
+				confirmPassword.dataset.invalid = "true";
+				return;
+			}
+
+			if (data.password === data.confirmPassword) {
+				password.dataset.invalid = "false";
+				confirmPassword.dataset.invalid = "false";
+			}
+
+			createUser({
+				address: data.street,
+				cep: data.cep,
+				city: data.town,
+				email: data.email,
+				id: new Date().getTime().toString(),
+				name: data.name,
+				neighborhood: data.neighborhood,
+				state: data.uf,
+				password: data.password,
+				number: data.number,
+			});
+
+			await new Promise((resolve) => {
+				setTimeout(() => {
+					resolve(null);
+				}, 1500);
+			});
+
+			toast.success("Usuário criado com sucesso");
+			form.current.reset();
 		});
-
-		toast.success("Usuário criado com sucesso");
-		eventForm.currentTarget.reset();
 	}
 
 	return (
@@ -194,6 +205,7 @@ export function FormUser() {
 						minLength={8}
 						maxLength={9}
 						placeholder="99999-999"
+						readOnly={isPending}
 						onChange={(event) => {
 							const currentValue = event.currentTarget.value.replaceAll(
 								/\D/g,
@@ -268,7 +280,8 @@ export function FormUser() {
 			<footer className="col-span-12 mt-4 flex flex-wrap justify-stretch gap-5 pb-5">
 				<Button type="submit" size="sm" className="w-full md:w-min">
 					Cadastrar novo usuário
-					<User2 className="ml-4 size-4" />
+					{isPending && <Loader2 className="ml-4 size-4 animate-spin" />}
+					{!isPending && <User2 className="ml-4 size-4" />}
 				</Button>
 				<Button
 					type="button"
