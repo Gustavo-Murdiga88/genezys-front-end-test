@@ -1,8 +1,8 @@
 "use client";
 
 import { useTheme } from "next-themes";
+import type { ComponentProps } from "react";
 import { Toaster as Sonner } from "sonner";
-import type { ComponentProps } from "react"
 
 type ToasterProps = ComponentProps<typeof Sonner>;
 
