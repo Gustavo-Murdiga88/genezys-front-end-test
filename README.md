@@ -1,6 +1,6 @@
 ## Genezys front end
 
-   Este projeto tem como intuito mostrar ao time de desenvolvimento da Genezys meu conhecimentos no desenvolvimento de sistemas web utilizando tecnologias, essas tais como: 
+   Este projeto tem como intuito mostrar ao time de desenvolvimento da Genezys meus conhecimentos no desenvolvimento de sistemas web utilizando tecnologias como: 
 
   - ReactJS
   - NextJS
@@ -10,9 +10,9 @@
   
   ## Setup
 
-  Para iniciar o projeto será necessário a instalação do Node em sua versão LTS e você possua um gerenciador de pacotes que mais te agrade, neste projeto optamos por utilizar o <a href="https://pnpm.io/pt/">pnpm</a>.
+  Para iniciar o projeto será necessário a instalação do Node em sua versão LTS e que você possua um gerenciador de pacotes que mais te agrade, neste projeto optamos por utilizar o <a href="https://pnpm.io/pt/">pnpm</a>.
 
-  - De primeiro momento será necessário realizar o clone do repositório.
+  - Neste primeiro momento será necessário realizar o clone do repositório.
     Se você possuir a CLI do github instalada em sua máquina, você pode realizar o clone do projeto da seguinte forma.
 
   ```git 
@@ -24,12 +24,11 @@
    git@github.com:Gustavo-Murdiga88/genezys-front-end-test.git
   ```
 
-  - Após a execução do clone do projeto, você deve ir até a pasta projeto, executando
+  - Após a execução do clone do projeto, você deve ir até a pasta raiz do projeto, executando
   ```shell
     cd genezys-front-end-test
   ```
   - Em seguida devemos instalar todas as dependências do projeto. Executando no terminal
-
   ```shell
     pnpm install
   ```
@@ -41,7 +40,7 @@
   ```
   - Em seguida iremos ter um retorno em nosso terminal, e podemos acessar a aplicação na seguinte URL: http://localhost:3000
   
-  - Ao acessar a url iremos encontrar a tela principal
+  - Ao acessar a url iremos encontrar a tela principal o app contempla as seguintes rotas.
    
   /signin
 
