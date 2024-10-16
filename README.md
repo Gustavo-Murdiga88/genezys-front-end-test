@@ -46,6 +46,14 @@
 
   ![Signin](assets/signin.jpeg)
 
+  **obs: Para que você possa utilizar o sistema, pode usar alguns do usuários que já estão cadastrados por padrão, e você pode encontra-los dentro do arquivo em: /src/store/cache-users.ts** 
+  
+  Se preferir pode usar a seguinte conta: 
+  ```js
+    email: john.doe@example.com
+    senha: 12345678
+  ```
+
   /forgot-password
 
   ![forgot-password](assets/forgot-password.jpeg)
