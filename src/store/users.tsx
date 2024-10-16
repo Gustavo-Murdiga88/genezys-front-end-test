@@ -26,7 +26,7 @@ interface IUser {
 	state: string;
 	cep: string;
 	password: string;
-	number: string; 
+	number: string;
 }
 interface IUsersContextProps {
 	users: IUser[];
@@ -36,6 +36,7 @@ interface IUsersContextProps {
 	getUsersPerPage: (page: number) => {
 		users: IUser[];
 		totalResults: number;
+		totalPages: number;
 		isLastPage: boolean;
 	};
 }
@@ -63,6 +64,7 @@ export function UsersProvider({ children }: IUsersProviderProps) {
 				users: usersPerPage,
 				totalResults: users.length,
 				isLastPage: usersPerPage.length < 10 || users.length === page * 10,
+				totalPages: Math.ceil(users.length / 10),
 			};
 		},
 		[users],

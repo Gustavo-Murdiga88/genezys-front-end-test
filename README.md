@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Genezys front end
 
-## Getting Started
+   Este projeto tem como intuito mostrar ao time de desenvolvimento da Genezys meu conhecimentos no desenvolvimento de sistemas web utilizando tecnologias, essas tais como: 
 
-First, run the development server:
+  - ReactJS
+  - NextJS
+  - ContextAPI
+  - TailwindCSS
+  - Shadcnui
+  
+  ## Setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+  Para iniciar o projeto será necessário a instalação do Node em sua versão LTS e você possua um gerenciador de pacotes que mais te agrade, neste projeto optamos por utilizar o <a href="https://pnpm.io/pt/">pnpm</a>.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+  - De primeiro momento será necessário realizar o clone do repositório.
+    Se você possuir a CLI do github instalada em sua máquina, você pode realizar o clone do projeto da seguinte forma.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+  ```git 
+    gh repo clone Gustavo-Murdiga88/genezys-front-end-test
+  ```
+   ou se preferir por SSH 
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+  ```git 
+   git@github.com:Gustavo-Murdiga88/genezys-front-end-test.git
+  ```
 
-## Learn More
+  - Após a execução do clone do projeto, você deve ir até a pasta projeto, executando
+  ```shell
+    cd genezys-front-end-test
+  ```
+  - Em seguida devemos instalar todas as dependências do projeto. Executando no terminal
 
-To learn more about Next.js, take a look at the following resources:
+  ```shell
+    pnpm install
+  ```
+  ## Executando o projeto
+    
+  - Em seguida já podemos executar o projeto, executando em seu terminal o seguinte comando 
+  ```shell
+    pnpm run dev
+  ```
+  - Em seguida iremos ter um retorno em nosso terminal, e podemos acessar a aplicação na seguinte URL: http://localhost:3000
+  
+  - Ao acessar a url iremos encontrar a tela principal
+   
+  /signin
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  ![Signin](assets/signin.jpeg)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  /forgot-password
 
-## Deploy on Vercel
+  ![forgot-password](assets/forgot-password.jpeg)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  /home
+  ![users](assets/users.jpeg)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+  /home - drawer aberto
+
+  ![drawer open](assets/drawer.jpeg)
+
+  /register
+  ![register](assets/register.jpeg)
+
+  ## Agradecimentos
+
+  Agradeço a Genezys pelo desafio, espero ter atendido os requisitos necessários esperados pela equipe. 
+  
+  Obrigado  🙏

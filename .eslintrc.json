@@ -2,6 +2,10 @@
   "extends": [
     "@gm-dev/eslint-config/tailwind/next"
   ],
+  "ignorePatterns": [
+    "**.md",
+    "/node_modules/"
+  ],
   "rules": {
     "no-restricted-syntax": "off",
     "no-continue": "off"

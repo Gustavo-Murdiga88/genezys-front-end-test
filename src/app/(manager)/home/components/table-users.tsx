@@ -8,7 +8,6 @@ import {
 	Table,
 	TableBody,
 	TableCell,
-	TableFooter,
 	TableHeader,
 	TableHeaderCell,
 	TableRow,
@@ -23,7 +22,9 @@ export function TableUsers() {
 
 	const page = Number(searchParams.get("page")) || 1;
 
-	const { isLastPage, users, totalResults } = getUsersPerPage(page - 1);
+	const { isLastPage, users, totalResults, totalPages } = getUsersPerPage(
+		page - 1,
+	);
 
 	if (loading) {
 		return (
@@ -32,119 +33,103 @@ export function TableUsers() {
 	}
 
 	return (
-		<Table>
-			<TableHeader>
-				<TableRow>
-					<TableHeaderCell>Nome</TableHeaderCell>
-					<TableHeaderCell>Email</TableHeaderCell>
-					<TableHeaderCell>Rua</TableHeaderCell>
-					<TableHeaderCell>Número</TableHeaderCell>
-					<TableHeaderCell>Bairro</TableHeaderCell>
-					<TableHeaderCell>CEP</TableHeaderCell>
-					<TableHeaderCell>Cidade</TableHeaderCell>
-					<TableHeaderCell>Estado</TableHeaderCell>
-				</TableRow>
-			</TableHeader>
-			<TableBody>
-				{users.map(
-					({ id, name, email, address, cep, city, state, neighborhood, number }) => (
-						<TableRow key={id}>
-							<TableCell>
-								<div className="truncate">
-									{name}
-								</div>
-							</TableCell>
-							<TableCell
-								title={email}
-							>
-								<div className="truncate max-w-[13.75rem]">
-									{email}
-								</div>
-							</TableCell>
-							<TableCell
-								title={address}
-							>
-								<div className="truncate max-w-[10.625rem]">
-									{address}
-								</div>
-							</TableCell>
-							<TableCell
-								title={number}
-							>
-								<div className="truncate max-w-[10.625rem]">
-									{number}
-								</div>
-							</TableCell>
-							<TableCell
-								title={neighborhood}>
-								<div className="truncate max-w-[10.625rem]">
-									{neighborhood}
-								</div>
-							</TableCell>
-							<TableCell>
-								<div className="truncate">
-									{cep}
-								</div>
-							</TableCell>
-							<TableCell
-								title={city}
-							>
-								<div className="truncate max-w-[10.625rem]">
-									{city}
-								</div>
-							</TableCell>
-							<TableCell>
-								<div className="truncate">
-									{state}
-								</div>
-							</TableCell>
+		<>
+			<div className="overflow-auto pb-2">
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHeaderCell>Nome</TableHeaderCell>
+							<TableHeaderCell>Email</TableHeaderCell>
+							<TableHeaderCell>Rua</TableHeaderCell>
+							<TableHeaderCell>Número</TableHeaderCell>
+							<TableHeaderCell>Bairro</TableHeaderCell>
+							<TableHeaderCell>CEP</TableHeaderCell>
+							<TableHeaderCell>Cidade</TableHeaderCell>
+							<TableHeaderCell>Estado</TableHeaderCell>
 						</TableRow>
-					),
-				)}
-			</TableBody>
-			<TableFooter>
-				<TableRow className="sticky inset-x-0">
-					<TableCell colSpan={7} className="border-t">
-						<div className="text-left">
-							<strong className="text-muted-foreground">Total:</strong>
-							<span className="font-semibold text-primary">
-								{" "}
-								{totalResults} registros
-							</span>
-
-						</div>
-					</TableCell>
-					<TableCell colSpan={1} className="border-t">
-						<div className="flex items-center justify-end gap-5">
-							<Button
-								className="hover:bg-background"
-								size="icon"
-								variant="outline"
-								disabled={page === 1}
-								onClick={() => {
-									router.push(`/home?page=${page - 1}`);
-								}}
-							>
-								<ChevronLeft />
-							</Button>
-							<strong>{page}</strong>
-							<Button
-								disabled={isLastPage}
-								className="hover:bg-background"
-								size="icon"
-								variant="outline"
-								onClick={() => {
-									router.push(`/home?page=${page + 1}`);
-								}}
-							>
-								<ChevronRight />
-							</Button>
-
-						</div>
-					</TableCell>
-				</TableRow>
-			</TableFooter>
-		</Table >
-
+					</TableHeader>
+					<TableBody>
+						{users.map(
+							({
+								id,
+								name,
+								email,
+								address,
+								cep,
+								city,
+								state,
+								neighborhood,
+								number,
+							}) => (
+								<TableRow key={id}>
+									<TableCell>
+										<div className="truncate">{name}</div>
+									</TableCell>
+									<TableCell title={email}>
+										<div className="max-w-[13.75rem] truncate">{email}</div>
+									</TableCell>
+									<TableCell title={address}>
+										<div className="max-w-[10.625rem] truncate">{address}</div>
+									</TableCell>
+									<TableCell title={number}>
+										<div className="max-w-[10.625rem] truncate">{number}</div>
+									</TableCell>
+									<TableCell title={neighborhood}>
+										<div className="max-w-[10.625rem] truncate">
+											{neighborhood}
+										</div>
+									</TableCell>
+									<TableCell>
+										<div className="truncate">{cep}</div>
+									</TableCell>
+									<TableCell title={city}>
+										<div className="max-w-[10.625rem] truncate">{city}</div>
+									</TableCell>
+									<TableCell>
+										<div className="truncate">{state}</div>
+									</TableCell>
+								</TableRow>
+							),
+						)}
+					</TableBody>
+				</Table>
+			</div>
+			<div className="mb-5 mt-2 flex items-center justify-between rounded-sm border p-4">
+				<div className="text-left text-sm">
+					<span className="text-muted-foreground">Total de páginas: </span>
+					<strong className="mr-3">{totalPages}</strong>
+					<strong className="text-muted-foreground">Total registros:</strong>
+					<span className="font-semibold text-primary">
+						{" "}
+						{totalResults} usuários
+					</span>
+				</div>
+				<div className="flex items-center justify-end gap-5">
+					<Button
+						className="hover:bg-background"
+						size="icon"
+						variant="outline"
+						disabled={page === 1}
+						onClick={() => {
+							router.push(`/home?page=${page - 1}`);
+						}}
+					>
+						<ChevronLeft />
+					</Button>
+					<strong>{page}</strong>
+					<Button
+						disabled={isLastPage}
+						className="hover:bg-background"
+						size="icon"
+						variant="outline"
+						onClick={() => {
+							router.push(`/home?page=${page + 1}`);
+						}}
+					>
+						<ChevronRight />
+					</Button>
+				</div>
+			</div>
+		</>
 	);
 }

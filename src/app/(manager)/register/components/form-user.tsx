@@ -6,7 +6,7 @@ import { type FormEvent, useRef } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Input, InputPassword } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getAddressByCep } from "@/http/get-address-by-cep";
 import { useUsers } from "@/store/users";
@@ -37,19 +37,20 @@ export function FormUser() {
 			return;
 		}
 
-		if (form.current) {
+		if (form.current && typeof document !== "undefined") {
 			const { bairro, cep, uf, localidade, logradouro } = response.data;
+			const city = document.getElementById("town") as HTMLInputElement;
+			const cepInput = document.getElementById("cep") as HTMLInputElement;
+			const street = document.getElementById("street") as HTMLInputElement;
+			const neighborhood = document.getElementById(
+				"neighborhood",
+			) as HTMLInputElement;
+			const ufInput = document.getElementById("uf") as HTMLInputElement;
 
-			const cepInput = form.current[5] as HTMLInputElement;
-			const street = form.current[6] as HTMLInputElement;
-			const neighborhood = form.current[8] as HTMLInputElement;
-			const city = form.current[9] as HTMLInputElement;
-			const ufInput = form.current[10] as HTMLInputElement;
-
+			city.value = localidade;
 			cepInput.value = cep;
 			street.value = logradouro;
 			neighborhood.value = bairro;
-			city.value = localidade;
 			ufInput.value = uf;
 		}
 	}
@@ -68,7 +69,7 @@ export function FormUser() {
 			const inputIsInvalid =
 				"value" in input &&
 				!input.value &&
-				input.getAttribute("type") !== "submit";
+				!["submit", "button"].includes(input.getAttribute("type") || "");
 
 			if (inputIsInvalid) {
 				(input as HTMLInputElement).dataset.invalid = "true";
@@ -88,16 +89,21 @@ export function FormUser() {
 			formEvent.entries(),
 		) as unknown as IFormProps;
 
+		const password = document.getElementById("password") as HTMLInputElement;
+		const confirmPassword = document.getElementById(
+			"confirmPassword",
+		) as HTMLInputElement;
+
 		if (data.password !== data.confirmPassword) {
 			toast.error("As senhas informadas não conferem");
-			(form.current[2] as HTMLInputElement).dataset.invalid = "true";
-			(form.current[3] as HTMLInputElement).dataset.invalid = "true";
+			password.dataset.invalid = "true";
+			confirmPassword.dataset.invalid = "true";
 			return;
 		}
 
 		if (data.password === data.confirmPassword) {
-			(form.current[2] as HTMLInputElement).dataset.invalid = "false";
-			(form.current[3] as HTMLInputElement).dataset.invalid = "false";
+			password.dataset.invalid = "false";
+			confirmPassword.dataset.invalid = "false";
 		}
 
 		createUser({
@@ -113,6 +119,7 @@ export function FormUser() {
 			number: data.number,
 		});
 
+		toast.success("Usuário criado com sucesso");
 		eventForm.currentTarget.reset();
 	}
 
@@ -133,6 +140,7 @@ export function FormUser() {
 					autoCapitalize="words"
 				/>
 			</div>
+
 			<div className="col-span-12 md:col-span-6 [&:has(input[data-invalid='true'])_label]:text-red-500">
 				<Label htmlFor="email">Email</Label>
 				<Input
@@ -144,11 +152,12 @@ export function FormUser() {
 					placeholder="john.joe@example.com"
 				/>
 			</div>
+
 			<div className="col-span-12 md:col-span-6 [&:has(input[data-invalid='true'])_label]:text-red-500">
 				<Label htmlFor="password">Senha</Label>
-				<Input
+				<InputPassword
 					data-invalid={false}
-					className="data-[invalid=true]:border-red-500"
+					className="has-[input[data-invalid='true']]:border-red-500"
 					id="password"
 					minLength={8}
 					maxLength={8}
@@ -156,11 +165,12 @@ export function FormUser() {
 					placeholder="********"
 				/>
 			</div>
+
 			<div className="col-span-12 md:col-span-6 [&:has(input[data-invalid='true'])_label]:text-red-500">
 				<Label htmlFor="confirmPassword">Confirmar senha</Label>
-				<Input
+				<InputPassword
 					data-invalid={false}
-					className="data-[invalid=true]:border-red-500"
+					className="has-[input[data-invalid='true']]:border-red-500"
 					id="confirmPassword"
 					name="confirmPassword"
 					minLength={8}
@@ -173,6 +183,7 @@ export function FormUser() {
 				<legend className="mb-4 w-full border-b pb-2">
 					Cadastro de endereço
 				</legend>
+
 				<div className="col-span-12 md:col-span-6 [&:has(input[data-invalid='true'])_label]:text-red-500">
 					<Label htmlFor="cep">CEP</Label>
 					<Input
@@ -195,6 +206,7 @@ export function FormUser() {
 						}}
 					/>
 				</div>
+
 				<div className="col-span-12 md:col-span-6 [&:has(input[data-invalid='true'])_label]:text-red-500">
 					<Label htmlFor="street">Rua</Label>
 					<Input
@@ -206,6 +218,7 @@ export function FormUser() {
 						placeholder="Rua das flores"
 					/>
 				</div>
+
 				<div className="col-span-12 md:col-span-6 [&:has(input[data-invalid='true'])_label]:text-red-500">
 					<Label htmlFor="neighborhood">Número</Label>
 					<Input
@@ -216,6 +229,7 @@ export function FormUser() {
 						placeholder="A-190"
 					/>
 				</div>
+
 				<div className="col-span-12 md:col-span-6 [&:has(input[data-invalid='true'])_label]:text-red-500">
 					<Label htmlFor="neighborhood">Bairro</Label>
 					<Input
@@ -226,6 +240,7 @@ export function FormUser() {
 						placeholder="Jardim das flores"
 					/>
 				</div>
+
 				<div className="col-span-12 md:col-span-6 [&:has(input[data-invalid='true'])_label]:text-red-500">
 					<Label htmlFor="town">Cidade</Label>
 					<Input

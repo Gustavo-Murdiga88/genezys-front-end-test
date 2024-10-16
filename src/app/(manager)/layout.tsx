@@ -10,7 +10,6 @@ export default function ManagerLayout({
 }>) {
 	const userCookie = getCookie("user", { cookies });
 
-	console.log(userCookie);
 	if (!userCookie) {
 		return redirect("/signin");
 	}

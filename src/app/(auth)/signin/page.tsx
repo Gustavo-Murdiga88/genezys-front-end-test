@@ -7,7 +7,7 @@ import { type FormEvent, useTransition } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Input, InputPassword } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUsers } from "@/store/users";
 
@@ -72,11 +72,10 @@ export default function Signin() {
 				</div>
 				<div>
 					<Label>Senha</Label>
-					<Input
+					<InputPassword
 						type="password"
 						name="password"
 						placeholder="Digite sua senha"
-						autoComplete="current-password"
 					/>
 				</div>
 				<Button type="submit" className="mt-6">

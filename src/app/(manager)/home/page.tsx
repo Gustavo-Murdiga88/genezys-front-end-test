@@ -15,7 +15,7 @@ export default function Register() {
 			/>
 			<div>
 				<div className="mb-5 flex flex-wrap items-center justify-between">
-					<h2 className="text-pretty p-4 text-muted-foreground">
+					<h2 className="text-pretty p-4 text-sm text-muted-foreground">
 						Resumo de usuários que sua organização possui
 					</h2>
 					<Button asChild className="ml-auto w-full text-xs md:w-max" size="sm">

@@ -10,11 +10,11 @@ export function Header({
 	subtitle?: string;
 }) {
 	return (
-		<header className="flex items-center justify-between border-b px-4 pb-2">
+		<header className="flex items-center justify-between gap-4 border-b px-4 pb-2">
 			<div>
 				<h1 className="text-lg font-semibold text-primary">{title}</h1>
 				{subtitle && (
-					<p className="text-balance text-sm text-muted-foreground">
+					<p className="text-pretty text-xs text-muted-foreground">
 						{subtitle}
 					</p>
 				)}

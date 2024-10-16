@@ -33,7 +33,7 @@ export function Navigation({ children }: { children: ReactNode }) {
 						</SheetTitle>
 					</SheetHeader>
 					<ul className="mt-4 flex flex-col items-stretch gap-3">{children}</ul>
-					<SheetFooter className="flex-1 flex-col items-end">
+					<SheetFooter className="flex-1 flex-col items-end justify-end">
 						<div className="w-full border-t pt-2">
 							<Button asChild variant="ghost" className="w-full justify-start">
 								<Link
