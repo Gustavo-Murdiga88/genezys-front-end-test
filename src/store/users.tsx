@@ -50,7 +50,7 @@ export function UsersProvider({ children }: IUsersProviderProps) {
 		(user: IUser) => {
 			const currentUsers = [user, ...users];
 			setUsers(currentUsers);
-			localStorage.setItem("users", JSON.stringify(currentUsers));
+			localStorage.setItem("@genezys:users:1.0", JSON.stringify(currentUsers));
 		},
 		[users],
 	);
@@ -87,7 +87,7 @@ export function UsersProvider({ children }: IUsersProviderProps) {
 	);
 
 	useEffect(() => {
-		const storageUsers = localStorage.getItem("users");
+		const storageUsers = localStorage.getItem("@genezys:users:1.0");
 		if (storageUsers) {
 			const usersFromJSON = JSON.parse(storageUsers);
 			setUsers(usersFromJSON);
